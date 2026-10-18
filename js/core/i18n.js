@@ -22,7 +22,7 @@ G.I18n = (() => {
   try { saved = localStorage.getItem(KEY); } catch (e) { /* nada */ }
   const byPath = /\/en(\/|$)/.test(location.pathname) ? 'en' : null;
   const nav = ((navigator.languages && navigator.languages[0]) || navigator.language || 'es').toLowerCase();
-  const lang = saved === 'es' || saved === 'en' ? saved : byPath || (nav.startsWith('es') ? 'es' : 'en');
+  const lang = saved === 'es' || saved === 'en' ? saved : byPath || 'es';  // el texto original (español) lo traduce js/zh-hant.js al chino
   document.documentElement.lang = lang;
 
   const exact = new Map(), exactLow = new Map();
