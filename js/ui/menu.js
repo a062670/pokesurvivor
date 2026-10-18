@@ -58,6 +58,17 @@ G.MenuUI = (() => {
       };
     });
 
+    // Botones de regalo: +10000 monedas y +100 tickets ×10.
+    const gift = (fn, msg) => () => {
+      fn(G.DB.save);
+      G.DB.commit(true);
+      G.Audio.sfx('buy');
+      G.UI.refreshCoins();
+      G.UI.toast(msg);
+    };
+    $('menu-add-coins').onclick = gift(sv => { sv.coins += 10000; }, '+10000 金幣');
+    $('menu-add-t10').onclick = gift(sv => { sv.tickets.t10 += 100; }, '+100 張十連抽獎券');
+
     const owned = Object.keys(s.owned).filter(d => G.DEX_BY[d]).length;
     const shinies = Object.keys(s.shiny || {}).length;
     $('menu-dex-count').textContent = `${owned} / ${G.DEX.length}` + (shinies ? ` · ${shinies} shiny` : '');

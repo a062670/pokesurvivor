@@ -111,6 +111,7 @@
   const DICT = {
   "Juego en chino tradicional": "繁體中文版",
   "19 de octubre de 2026": "2026 年 10 月 19 日",
+  "En el menú principal, botones para conseguir +10000 monedas y +100 tickets ×10.": "主選單新增按鈕：可獲得 10000 金幣與 100 張十連抽獎券。",
   "El juego sale en chino tradicional por defecto.": "遊戲預設以繁體中文顯示。",
   "Acero": "鋼",
   "Agua": "水",
