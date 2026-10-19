@@ -385,6 +385,7 @@ G.DB = (() => {
     const accs = read(K_ACC) || {};
     if (!accs[k]) { remove(K_SES); return false; }
     beginLocal(k, accs[k].name);
+    if (k === K_GUEST) user = G.T('Invitado');
     return true;
   }
 
@@ -758,7 +759,19 @@ G.DB = (() => {
     commit();
   }
 
+  // Sin nube (este fork, pokesurvivor.gagu.dev): el invitado se guarda en este
+  // navegador como una cuenta local más, y al volver sigue donde lo dejó.
+  // '#guest' no choca con ningún nombre (sólo letras, números y _).
+  const K_GUEST = '#guest';
   function playAsGuest() {
+    if (mode === 'local') {
+      const accs = read(K_ACC) || {};
+      if (!accs[K_GUEST]) { accs[K_GUEST] = { name: 'Invitado', guest: true, created: Date.now() }; write(K_ACC, accs); }
+      beginLocal(K_GUEST, 'Invitado');
+      user = G.T('Invitado'); uid = null;
+      commit();
+      return { ok: true, isNew: !save.partner };
+    }
     user = 'Invitado'; key = null; guest = true; uid = null;
     save = newSave('Invitado');
     if (mode === 'local') remove(K_SES);
