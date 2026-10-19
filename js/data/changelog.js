@@ -7,6 +7,7 @@
  */
 G.CHANGELOG = [
   { d: '2026-10-19', title: ['38 ataques nuevos', '38 new moves'], new: [
+    ['En la Pokédex, botón para desbloquear al momento los Pokémon que aún no tienes.', 'In the Pokédex, a button to instantly unlock Pokémon you do not have yet.'],
     ['Sin cuenta, el invitado ya guarda la partida en este navegador y al volver sigue donde lo dejó.', 'As a guest, your game is now saved in this browser and continues where you left off.'],
     ['El juego sale en chino tradicional por defecto.', 'The game is shown in Traditional Chinese by default.'],
     ['En el menú principal, botones para conseguir +10000 monedas y +100 tickets ×10.', 'Buttons on the main menu to get +10000 coins and +100 ×10 tickets.'],

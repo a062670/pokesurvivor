@@ -324,7 +324,8 @@ G.MenuUI = (() => {
           ? '<button class="btn grow" disabled style="width:100%">Es tu compañero</button>'
           : `<button id="dex-pick" class="btn gold" data-sfx="confirm" style="width:100%">Elegir de compañero${viewShiny ? ' (shiny)' : ''}</button>`}
       ` : `<p class="center" style="color:var(--muted)">Aún no lo tienes.<br>Consíguelo en el banner de <b class="gold">${GEN_NAMES[p.gen - 1]}</b>
-            o derrotándolo cuando salga shiny.</p>`}
+            o derrotándolo cuando salga shiny.</p>
+          <button id="dex-unlock" class="btn gold" data-sfx="confirm" style="width:100%">解鎖</button>`}
     `;
     $('dex-big').style.setProperty('--stage-c', !own ? '#5b83d6' : viewShiny ? '#9ae6ff' : G.U.TYPE_COLOR[p.types[0]]);
     $('dex-big').classList.toggle('shiny', own && viewShiny);
@@ -334,6 +335,20 @@ G.MenuUI = (() => {
     });
     const fav = $('dex-fav');
     if (fav) fav.onclick = () => { G.DB.setFav(dex, !G.DB.isFav(dex)); renderGrid(true); showDetail(dex); };
+    // Desbloquear al momento un Pokémon que aún no tienes.
+    const unlock = $('dex-unlock');
+    if (unlock) unlock.onclick = () => {
+      G.DB.grant(dex, 'unlock');
+      G.DB.commit();
+      G.UI.toast(p.name + ' 已解鎖');
+      // Cuenta de arriba y de cada generación, sin perder la posición de la lista.
+      const all = G.DEX.filter(m => s.owned[m.dex]);
+      $('dex-total').textContent = `${all.length} / ${G.DEX.length}`;
+      $('dex-gens').querySelectorAll('.gen-tab small').forEach((el, g) => {
+        el.textContent = `${g ? all.filter(m => m.gen === g).length : all.length}/${g ? G.DEX.filter(m => m.gen === g).length : G.DEX.length}`;
+      });
+      renderGrid(true); showDetail(dex);
+    };
     const pick = $('dex-pick');
     if (pick) pick.onclick = () => {
       s.partner = dex;
